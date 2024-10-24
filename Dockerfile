@@ -1,4 +1,8 @@
 # Dockerfile used in execution of Github Action
+FROM gruntwork/terragrunt:0.2.0 AS build-azure-cli
+
+
+
 FROM gruntwork/terragrunt:0.2.0
 LABEL maintainer="Gruntwork <info@gruntwork.io>"
 
@@ -12,6 +16,8 @@ COPY ["./src/main.sh", "/action/main.sh"]
 
 RUN curl -sLO https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip && unzip -o -q awscli-exe-linux-x86_64.zip && ./aws/install && rm -rf awscli-exe-linux-x86_64.zip aws
 RUN apt update && apt install -y python3
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash \
+  && rm -rf /opt/az/lib/python3.11/site-packages/azure/mgmt/{compute,web,resource,containerregistry,sql,containerservice} /opt/az/lib/python3.11/site-packages/azure/cli/command_modules/network
+# We're not using those large libraries, so we remove them to save space
 
 ENTRYPOINT ["/action/main.sh"]
