@@ -1,4 +1,5 @@
-FROM gruntwork/terragrunt:0.2.0
+# Dockerfile used in execution of Github Action
+FROM gruntwork/terragrunt:2.1.7
 LABEL maintainer="Gruntwork <info@gruntwork.io>"
 
 ENV MISE_CONFIG_DIR=~/.config/mise
