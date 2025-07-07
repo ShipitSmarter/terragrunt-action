@@ -201,7 +201,7 @@ function main {
   local tg_arg_and_commands="${tg_command}"
   if [[ -n "${tofu_version}" ]]; then
     log "Using OpenTofu"
-    export TERRAGRUNT_TFPATH=tofu
+    export TG_TF_PATH=tofu
   fi
 
   if [[ "$tg_command" == "apply"* || "$tg_command" == "destroy"* || "$tg_command" == "run-all apply"* || "$tg_command" == "run-all destroy"* ]]; then
